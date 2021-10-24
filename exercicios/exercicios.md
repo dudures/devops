@@ -18,19 +18,22 @@ https://github.com/jonathanbaraldi/devops
 
 ```sh
 
-$ ssh -i devops-ninja.pem ubuntu@<ip>  - RancherSerber - HOST A
-$ ssh -i devops-ninja.pem ubuntu@<ip>  - k8s-1         - HOST B
-$ ssh -i devops-ninja.pem ubuntu@<ip>  - k8s-2         - HOST C
-$ ssh -i devops-ninja.pem ubuntu@<ip>  - k8s-3         - HOST D
+$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - RancherServer - HOST A
+$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - k8s-1         - HOST B
+$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - k8s-2         - HOST C
+$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - k8s-3         - HOST D
+
+#$ ssh -i devops-ninja.pem ubuntu@<ip>  - RancherSerber - HOST A
+#$ ssh -i devops-ninja.pem ubuntu@<ip>  - k8s-1         - HOST B
+#$ ssh -i devops-ninja.pem ubuntu@<ip>  - k8s-2         - HOST C
+#$ ssh -i devops-ninja.pem ubuntu@<ip>  - k8s-3         - HOST D
 
 $ sudo su
-$ curl https://releases.rancher.com/install-docker/19.03.sh | sh
+$ curl https://releases.rancher.com/install-docker/20.10.sh | sh
+#$ curl https://releases.rancher.com/install-docker/19.03.sh | sh
 $ usermod -aG docker ubuntu
+
 ```
-
-
-
-
 
 # Aula 5 - Construindo sua aplicação
 
@@ -45,14 +48,17 @@ Entrar no host A, e instalar os pacotes abaixo, que incluem Git, Python, Pip e o
 
 $ sudo su
 $ apt-get install git -y
-$ curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#$ curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
 $ chmod +x /usr/local/bin/docker-compose
 $ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 Com os pacotes instalados, agora iremos baixar o código fonte e começaremos a fazer os build's e rodar os containers.
 ```sh
 $ cd /home/ubuntu
-$ git clone https://github.com/jonathanbaraldi/devops
+$ git clone git@github.com:dudures/devops.git
+#$ git clone https://github.com/jonathanbaraldi/devops
 $ cd devops/exercicios/app
 ```
 
@@ -61,8 +67,10 @@ $ cd devops/exercicios/app
 Iremos fazer o build da imagem do Redis para a nossa aplicação.
 ```sh
 $ cd redis
-$ docker build -t <dockerhub-user>/redis:devops .
-$ docker run -d --name redis -p 6379:6379 <dockerhub-user>/redis:devops
+$ docker build -t dudures/redis:devops .
+$ docker run -d --name redis -p 6379:6379 dudures/redis:devops
+#$ docker build -t <dockerhub-user>/redis:devops .
+#$ docker run -d --name redis -p 6379:6379 <dockerhub-user>/redis:devops
 $ docker ps
 $ docker logs redis
 ```
@@ -74,11 +82,13 @@ Com isso temos o container do Redis rodando na porta 6379.
 Iremos fazer o build do container do NodeJs, que contém a nossa aplicação.
 ```sh
 $ cd ../node
-$ docker build -t <dockerhub-user>/node:devops .
+$ docker build -t dudures/node:devops .
+#$ docker build -t <dockerhub-user>/node:devops .
 ```
 Agora iremos rodar a imagem do node, fazendo a ligação dela com o container do Redis.
 ```sh
-$ docker run -d --name node -p 8080:8080 --link redis <dockerhub-user>/node:devops
+$ docker run -d --name node -p 8080:8080 --link redis dudures/node:devops
+#$ docker run -d --name node -p 8080:8080 --link redis <dockerhub-user>/node:devops
 $ docker ps 
 $ docker logs node
 ```
@@ -90,11 +100,13 @@ Com isso temos nossa aplicação rodando, e conectada no Redis. A api para verif
 Iremos fazer o build do container do nginx, que será nosso balanceador de carga.
 ```sh
 $ cd ../nginx
-$ docker build -t <dockerhub-user>/nginx:devops .
+$ docker build -t dudures/nginx:devops .
+#$ docker build -t <dockerhub-user>/nginx:devops .
 ```
 Criando o container do nginx a partir da imagem e fazendo a ligação com o container do Node
 ```sh
-$ docker run -d --name nginx -p 80:80 --link node <dockerhub-user>/nginx:devops
+$ docker run -d --name nginx -p 80:80 --link node dudures/nginx:devops
+#$ docker run -d --name nginx -p 80:80 --link node <dockerhub-user>/nginx:devops
 $ docker ps
 ```
 Podemos acessar então nossa aplicação nas portas 80 e 8080 no ip da nossa instância.

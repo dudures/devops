@@ -1,7 +1,4 @@
-
-
 # AWS CLI
-
 https://docs.aws.amazon.com/pt_br/cli/latest/userguide/cli-services-ec2-instances.html
 
 Script para lançar as máquinas direto sem usar o console.
@@ -14,9 +11,15 @@ Somente pegar os IP's publicos.
 # t3a.micro - 0,0094 USD por hora
 # t3.medium	- 0,0416 USD por hora
 # devops-ninja
-# sg-xxxxxxxxxx
-# subnet-xxxxxxxxxx
+# sg-06399c7c14d9800bc
+# subnet-01683e9334dbdaa83
 
+#Criação chave pela AWS CLI
+aws ec2 create-key-pair --key-name AwsEduardoDevops --query 'KeyEduardo' --output text > AwsEduardoDevops.pem
+
+# RANCHER SERVER - AWS Eduardo
+
+$ aws ec2 run-instances --image-id ami-09e67e426f25ce0d7ls --count 1 --instance-type t3.medium --key-name AwsEduardoDevops --security-group-ids sg-0783b26e30b51e91b --subnet-id subnet-01683e9334dbdaa83 --user-data file://rancher.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=rancherserver}]' 'ResourceType=volume,Tags=[{Key=Name,Value=rancherserver}]' 
 
 # RANCHER SERVER
 $ aws ec2 run-instances --image-id ami-0dba2cb6798deb6d8 --count 1 --instance-type t3.medium --key-name curso --security-group-ids sg-06399c7c14d9800bc --subnet-id subnet-3bf89867 --user-data file://rancher.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=rancherserver}]' 'ResourceType=volume,Tags=[{Key=Name,Value=rancherserver}]' 
