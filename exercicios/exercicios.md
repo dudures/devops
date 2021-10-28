@@ -4,11 +4,14 @@
 - 4 máquinas virtuais com 2/4 processadores e 6/8 gb de memória ram
 - 1 domínio
 - Sistema operacional Ubuntu 16.04 LTS
+- Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0ee02acd56a52998e (64 bits x86)
+- t3.medium com 2 processadores e 4Gb de memória - AWS Norte da Virgina	
+- VPC vpc-0decf1520710ab386
+- Subnet-01683e9334dbdaa83
+- Domínio usado pelo Eduardo do curso é: devopsk8s.pt
 
 - Domínio usado pelo instrutor do curso é: dev-ops-ninja.com
-
 https://github.com/jonathanbaraldi/devops
-
 
 # Aula 4 - Ambiente
 	
@@ -18,10 +21,10 @@ https://github.com/jonathanbaraldi/devops
 
 ```sh
 
-$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - RancherServer - HOST A
-$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - k8s-1         - HOST B
-$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - k8s-2         - HOST C
-$ ssh -i AwsEduardoDevops.pem ubuntu@<ip>  - k8s-3         - HOST D
+$ ssh -i rancher.pem ubuntu@54.164.2.134 - RancherServer - HOST A
+$ ssh -i rancher.pem ubuntu@18.234.135.103 - k8s-1         - HOST B
+$ ssh -i rancher.pem ubuntu@18.232.61.77 - k8s-2         - HOST C
+$ ssh -i rancher.pem ubuntu@18.209.159.161  - k8s-3         - HOST D
 
 #$ ssh -i devops-ninja.pem ubuntu@<ip>  - RancherSerber - HOST A
 #$ ssh -i devops-ninja.pem ubuntu@<ip>  - k8s-1         - HOST B
@@ -34,7 +37,6 @@ $ curl https://releases.rancher.com/install-docker/20.10.sh | sh
 $ usermod -aG docker ubuntu
 
 ```
-
 # Aula 5 - Construindo sua aplicação
 
 ### Fazer build das imagens, rodar docker-compose.
@@ -224,7 +226,8 @@ Agora iremos instalar o kubectl, que é a CLI do kubernetes. Através do kubectl
 
 $ sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
 $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-$ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+$ echo "deb https://apt.kubernetes.io/ kuberne
+tes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 $ sudo apt-get update
 $ sudo apt-get install -y kubectl
 ```
