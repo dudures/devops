@@ -21,7 +21,7 @@ https://github.com/jonathanbaraldi/devops
 
 ```sh
 
-$ ssh -i rancher.pem ubuntu@54.164.2.134 - RancherServer - HOST A
+$ ssh -i rancher.pem ubuntu@3.81.164.227 - RancherServer - HOST A
 $ ssh -i rancher.pem ubuntu@18.234.135.103 - k8s-1         - HOST B
 $ ssh -i rancher.pem ubuntu@18.232.61.77 - k8s-2         - HOST C
 $ ssh -i rancher.pem ubuntu@18.209.159.161  - k8s-3         - HOST D
@@ -147,17 +147,6 @@ Para terminar nossa aplicação temos que rodar o comando do docker-compose abai
 ```sh
 $ docker-compose down
 ```
-
-
-
-
-
-
-
-
-
-
-
 # Aula 6 - Rancher - Single Node
 
 ### Instalar Rancher - Single Node
@@ -175,19 +164,6 @@ Com o Rancher já rodando, irei adicionar a entrada de cada DNS para o IP de cad
 $ rancher.<dominio> = IP do host A
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Aula 7 - Kubernetes
 
 ### Criar cluster Kubernetes
@@ -201,20 +177,18 @@ Adicionar o host B e host C.
 
 Pegar o seu comando no seu rancher.
 ```sh
-$ docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.4.3 --server https://rancher.dev-ops-ninja.com --token 8xf5r2ttrvvqcxdhwsbx9cvb7s9wgwdmgfbmzr4mt7smjbg4jgj292 --ca-checksum 61ac25d1c389b26c5c9acd98a1c167dbfb394c6c1c3019d855901704d8bae282 --node-name k8s-1 --etcd --controlplane --worker
+
+Cluster Rancher Eduardo AWS
+
+k8s
+
+docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.4.3 --server https://rancher.devopsk8s.pt --token tjjcpxbq96b4lct7qrp2d6jxms9h5tc62q7247gkgdn4pn6l2b2zx6 --ca-checksum b73617d554bdbe841863f83121bc6f63f0c138e97261bf0c8feb27f89119b5ec --node-name k8s-3 --etcd --controlplane --worker
+
+
+#$ docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.4.3 --server https://rancher.dev-ops-ninja.com --token 8xf5r2ttrvvqcxdhwsbx9cvb7s9wgwdmgfbmzr4mt7smjbg4jgj292 --ca-checksum 61ac25d1c389b26c5c9acd98a1c167dbfb394c6c1c3019d855901704d8bae282 --node-name k8s-1 --etcd --controlplane --worker
 ```
 Será um cluster com 3 nós.
 Navegar pelo Rancher e ver os painéis e funcionalidades.
-
-
-
-
-
-
-
-
-
-
 
 
 # Aula 8 - Kubectl
@@ -226,8 +200,7 @@ Agora iremos instalar o kubectl, que é a CLI do kubernetes. Através do kubectl
 
 $ sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
 $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-$ echo "deb https://apt.kubernetes.io/ kuberne
-tes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+$ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 $ sudo apt-get update
 $ sudo apt-get install -y kubectl
 ```
@@ -235,17 +208,10 @@ $ sudo apt-get install -y kubectl
 Com o kubectl instalado, pegar as credenciais de acesso no Rancher e configurar o kubectl.
 
 ```sh
+$ mkdir -p ~/.kube/config
 $ vi ~/.kube/config
 $ kubectl get nodes
 ```
-
-
-
-
-
-
-
-
 
 # Aula 9 - DNS
 
