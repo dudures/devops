@@ -6,7 +6,7 @@ Script para lançar as máquinas direto sem usar o console.
 Somente pegar os IP's publicos.
 
 ```sh
-# RANCHER-SERVER - ami-0dba2cb6798deb6d8 (64-bit x86)
+# RANCHER-SERVER - ami-0ee02acd56a52998e (64-bit x86)
 # CLUSTER -  Processador ARM - ami-0ea142bd244023692
 # t3a.micro - 0,0094 USD por hora
 # t3.medium	- 0,0416 USD por hora
@@ -19,7 +19,7 @@ aws ec2 create-key-pair --key-name AwsEduardoDevops --query 'KeyEduardo' --outpu
 
 # RANCHER SERVER - AWS Eduardo
 
-$ aws ec2 run-instances --image-id ami-09e67e426f25ce0d7ls --count 1 --instance-type t3.medium --key-name AwsEduardoDevops --security-group-ids sg-0783b26e30b51e91b --subnet-id subnet-01683e9334dbdaa83 --user-data file://rancher.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=rancherserver}]' 'ResourceType=volume,Tags=[{Key=Name,Value=rancherserver}]' 
+$ aws ec2 run-instances --image-id ami-0ee02acd56a52998e --count 1 --instance-type t3.medium --key-name AwsEduardoDevops --security-group-ids sg-0783b26e30b51e91b --subnet-id subnet-01683e9334dbdaa83 --user-data file://rancher.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=rancherserver}]' 'ResourceType=volume,Tags=[{Key=Name,Value=rancherserver}]' 
 
 # RANCHER SERVER
 $ aws ec2 run-instances --image-id ami-0dba2cb6798deb6d8 --count 1 --instance-type t3.medium --key-name curso --security-group-ids sg-06399c7c14d9800bc --subnet-id subnet-3bf89867 --user-data file://rancher.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=rancherserver}]' 'ResourceType=volume,Tags=[{Key=Name,Value=rancherserver}]' 

@@ -119,7 +119,6 @@ $ docker rm -f $(docker ps -a -q)
 $ docker volume rm $(docker volume ls)
 ```
 
-
 #### DOCKER-COMPOSE
 Nesse exercício que fizemos agora, colocamos os containers para rodar, e interligando eles, foi possível observar  como funciona nossa aplicação que tem um contador de acessos.
 Para rodar nosso docker-compose, precisamos remover todos os containers que estão rodando e ir na raiz do diretório para rodar.
@@ -178,9 +177,7 @@ Adicionar o host B e host C.
 Pegar o seu comando no seu rancher.
 ```sh
 
-Cluster Rancher Eduardo AWS
-
-k8s
+Cluster Rancher Eduardo AWS - k8s
 
 docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run rancher/rancher-agent:v2.4.3 --server https://rancher.devopsk8s.pt --token tjjcpxbq96b4lct7qrp2d6jxms9h5tc62q7247gkgdn4pn6l2b2zx6 --ca-checksum b73617d554bdbe841863f83121bc6f63f0c138e97261bf0c8feb27f89119b5ec --node-name k8s-3 --etcd --controlplane --worker
 
@@ -218,6 +215,7 @@ $ kubectl get nodes
 ### Traefik - DNS
 
 *.rancher.dev-ops-ninja.com
+*.ranche.devopsk8s.pt
 
 
 O Traefik é a aplicação que iremos usar como ingress. Ele irá ficar escutando pelas entradas de DNS que o cluster deve responder. Ele possui um dashboard de  monitoramento e com um resumo de todas as entradas que estão no cluster.
